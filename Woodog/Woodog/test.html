@@ -1,0 +1,545 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+
+{% block body %}
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 95%;
+        margin: 0 auto;
+        margin-bottom: 4rem;
+    }
+
+    th {
+        border: 1px solid #636161;
+        text-align: left;
+        padding: 4px;
+        font-size: 1.2rem;
+    }
+
+    /* tr:nth-child(even) {
+        background-color: #dddddd;
+    } */
+
+
+    td {
+        font-size: 1.1rem;
+        text-align: left;
+        padding: 2px 2px;
+        padding-left: 4px;
+        padding-right: 4px;
+        border: 0.1rem solid #636161;
+
+    }
+
+    .Patient {
+        width: 500px;
+        position: relative;
+        top: 0;
+        right: 0;
+        text-align: end;
+    }
+
+    .logo {
+        display: flex;
+        flex-direction: row;
+    }
+</style>
+
+
+<main role="main" style="margin-top: 150px">
+
+    <div class="bs-example col-md-8 mx-auto">
+
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            
+        <li class="nav-item">
+          <a class="nav-link" id="clinical-tab" data-toggle="tab"
+            href="{% url 'clinical_variable:add_patient_detailed_demographic_information'%}" role="tab"
+            aria-controls="clinical" aria-selected="true">Clinical Variables</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="prescription-tab" data-toggle="tab"
+            href="{% url 'prescription:add_patient_prescription' %}" role="tab" aria-controls="profile"
+            aria-selected="false">Prescription</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="initiation-tab" data-toggle="tab" href="{% url 'initiation:add_initiation_summary' %}"
+            role="tab" aria-controls="initiation" aria-selected="false">Initiation Summary</a>
+        </li>
+  
+        <li class="nav-item">
+          <a class="nav-link" id="endterm-tab" data-toggle="tab" href="{% url 'midterm:midterm_report' %}" role="tab"
+            aria-controls="endterm" aria-selected="false">Mid-Term Summary</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="endterm-tab" data-toggle="tab" href="{% url 'endterm:add_endterm_report' %}" role="tab"
+            aria-controls="endterm" aria-selected="false">End-Term Summary</a>
+        </li>
+        </ul>
+    </div>
+</main>
+
+<div class="container">
+
+   <form action='' method="post" enctype='multipart/form-data'>{% csrf_token %}
+    <h3 style="margin-bottom: 1rem;margin-top: 1rem;padding-left: 2rem;">MID-TREATMENT REPORT</h3>
+    <table>
+        <thead>
+            <th height="55" colspan="15" style="background-color: rgb(204, 220, 252);">PATIENT DEMOGRAPHICS</th>
+        </thead>
+        {% for i in pd %}
+        <tr>
+            <td colspan="8" height="55">Title:<input name='tittle' placeholder='Him/Her/Others' type="text" style="border: none;
+                padding-left: 1rem;
+                outline: none;
+                width: 90%;" required></td>
+            <td colspan="7" height="55">Date of Birth: {{i.dob}} <label name='dob'  type="text" style="border: none;
+                padding-left: 1rem;
+                outline: none;
+                width: 70%;" required></td>
+        </tr>
+        <tr>
+            <td colspan="8" height="55">Name:<input name='name' value='{{i.patientname}}' type="text" style="border: none;
+                padding-left: 1rem;
+                outline: none;
+                width: 80%;" required></td> 
+            <td colspan="7" height="55">Gender:<input name='gender' value='{{i.gender}}' type="text" style="border: none;
+                padding-left: 1rem;
+                outline: none;
+                width: 70%;
+                " required></td>
+        </tr>
+        <tr>
+            <td colspan="8" height="55">Address:<input name='address' value='{{i.address}}' type="text" style="border: none;
+                padding-left: 1rem;
+                outline: none;
+                width: 80%;" required></td>
+            <td colspan="7" height="55">Postal Code:<input name='postal_code' value='{{i.postal_pin}}' type="number" style="border: none;
+                padding-left: 1rem;
+                outline: none;width: 70%;
+                " required></td>
+        </tr>
+        <tr>
+            <td colspan="8" height="55">Phone Number:<input name='phone_number' value='{{i.phone_number}}' type="text" style="border: none;
+                padding-left: 1rem;
+                outline: none;
+                width: 70%;" required></td>
+            <td colspan="7" height="55">Medicare No:<input name='medicare_no' type="number"  style="border: none;
+                padding-left: 1rem;
+                outline: none;width: 70%;
+                " required></td>
+        </tr>
+        {% endfor %}
+<thead>
+            <th height="55" colspan="15" style="background-color: rgb(204, 220, 252);">DISEASE DATA</th>
+        </thead>
+       <tr> 
+<th>Data </th>
+
+
+</tr>
+       
+        
+        <tr> 
+            <td colspan="5" height="55"><input name='disease_data1' value='{{name1}}' type="text" style="border: none;
+                padding-left: 1rem; 
+                outline: none;
+                width: 90%;" required></td>
+                
+                <td colspan="5" height="55"><input name='duration1' value='{{du1}}' type="text" style="border: none;
+                padding-left: 1rem;
+                outline: none;
+                width: 90%;" required></td>
+            <td colspan="5" height="55"><input type="text" style="border: none;
+                    padding-left: 1rem;
+                    outline: none;
+                    width: 90%;"></td>
+        </tr>
+        
+        <tr>
+            <td colspan="5" height="55"><input name='disease_data2' value='{{name2}}' type="text" style="border: none;
+                padding-left: 1rem;
+                outline: none;
+                width: 90%;"></td>
+            <td colspan="5" height="55"> <input name='duration2' value='{{du2}}' type="text" style="border: none;
+                padding-left: 1rem;
+                outline: none;
+                width: 90%;"></td>
+            <td colspan="5" height="55"><input type="text" style="border: none;
+                    padding-left: 1rem;
+                    outline: none;
+                    width: 90%;"></td>
+        </tr>
+        <tr>
+            <td colspan="5" height="55"><input type="text" name='disease_data3' style="border: none;
+                padding-left: 1rem;
+                outline: none;
+                width: 90%;"></td>
+            <td colspan="5" height="55"><input type="text" name='duration3' style="border: none;
+                padding-left: 1rem;
+                outline: none;
+                width: 90%;"></td>
+            <td colspan="5" height="55"><input type="text" style="border: none;
+                    padding-left: 1rem;
+                    outline: none;
+                    width: 90%;"></td>
+        </tr>
+        <tr>
+            <td colspan="10" height="55">If Depression, please enter Maudsley Staging Method Questionnaire Score</td>
+            <td colspan="5" height="55"><input type="number"  name='if_depresses_score' style="border: none;
+                padding-left: 1rem;
+                outline: none;
+                width: 90%;"></td>
+        </tr>
+        <thead>
+            <th height="55" colspan="15" style="background-color: rgb(204, 220, 252);">CURRENT MEDICATIONS</th>
+        </thead>
+        <tr>
+            <td colspan="5" height="55">Name </td>
+            <td colspan="5" height="55">Dose </td>
+            <td colspan="5" height="55">Response </td>
+        </tr>
+ {% comment %}  the area of main issue  {% endcomment %}
+
+
+        <tr>
+            <td colspan="5" height="55"><input name='medic_name1' value='{{dieseas_name}}' type="text" style="border: none;
+                padding-left: 1rem;
+                outline: none;
+                width: 90%;" required></td>
+            <td colspan="5" height="55"><input name='dose1' value='{{dose1}}' type="text" style="border: none;
+                padding-left: 1rem;
+                outline: none;
+                width: 90%;"  required></td>
+            <td colspan="5" height="55"><input name='response1' value='{{response1}}' type="text" style="border: none;
+                    padding-left: 1rem;
+                    outline: none;
+                    width: 90%;" required></td>
+        </tr>
+
+      
+
+        <thead>
+            <th height="55" colspan="15" style="background-color: rgb(204, 220, 252);">TMS TREATMENT </th>
+        </thead>
+        <tr>
+            <td colspan="8" height="55">Commencement Date:<input name='commencement_date' name='commencement_date' type="date" style="border: none;
+                padding-left: 1rem;
+                outline: none;
+                width: 50%;
+                " required></td>
+            <td colspan="7" height="55">Mid-treatment Date:<input name='mid_term_date' name='mid_term_date' type="date" style="border: none;
+                    padding-left: 1rem;
+                    outline: none;
+                    width: 50%;
+                    " required></td>
+        </tr>
+        <tr>
+            <td colspan="5" height="55">Treatment Location : <input name='treatment_location' value='treatment_location' type="text" style="border: none;
+                padding-left: 1rem;
+                outline: none;
+                width: 40%;"></td>
+            <td colspan="5" height="55">Left : <input name='mid_term_left1' name='mid_term_left1' type="text" style="border: none;
+                padding-left: 1rem;
+                outline: none;
+                width: 70%;"></td>
+            <td colspan="5" height="55">Right:<input name='mid_term_right1' type="text" value='' style="border: none;
+                    padding-left: 1rem;
+                    outline: none;
+                    width: 70%;"></td>
+        </tr>
+        <tr>
+            <td colspan="5" height="55">Name of protocol : <input name='name_of_protocol' type="text" style="border: none;
+                padding-left: 1rem;
+                outline: none;
+                width: 40%;"></td>
+            <td colspan="5" height="55">Left : <input name='mid_term_left2' type="text" style="border: none;
+                padding-left: 1rem;
+                outline: none;
+                width: 70%;"></td>
+            <td colspan="5" height="55">Right:<input name='mid_term_right2' type="text" style="border: none;
+                    padding-left: 1rem;
+                    outline: none;
+                    width: 70%;"></td>
+        </tr>
+        <tr>
+            <td colspan="5" height="55">Total Duration : <input name='total_duration' type="text" style="border: none;
+                padding-left: 1rem;
+                outline: none;
+                width: 40%;" placeholder="Enter number/months "></td>
+            <td colspan="5" height="55">Left : <input name='mid_term_left3' type="text" style="border: none;
+                padding-left: 1rem;
+                outline: none;
+                width: 70%;"></td>
+            <td colspan="5" height="55">Right:<input name='mid_term_right3' type="text" style="border: none;
+                    padding-left: 1rem;
+                    outline: none;
+                    width: 70%;"></td>
+        </tr>
+        <tr>
+            <td colspan="5" height="55">Total Pulses : <input name='total_pulse' type="text" style="border: none;
+                padding-left: 1rem;
+                outline: none;
+                width: 70%;"></td>
+            <td colspan="5" height="55"><input name='total_pulse_left' type="text" style="border: none;
+                padding-left: 1rem;
+                outline: none;
+                width: 90%;"></td>
+            <td colspan="5" height="55"><input name='total_pulse_right' type="text" style="border: none;
+                    padding-left: 1rem;
+                    outline: none;
+                    width: 90%;"></td>
+        </tr>
+        <tr>
+            <td colspan="5" height="55">No. of Sessions Prescribed:<input name='no_of_session_prescribed' type="text" style="border: none;
+                padding-left: 1rem;
+                outline: none;
+                width: 20%;"></td>
+         <td colspan="5" height="55">-------<input type="text" style="border: none;
+                padding-left: 1rem;
+                outline: none;
+                width: 90%;"></td> 
+         <td colspan="5" height="55">------<input type="text" style="border: none;
+                    padding-left: 1rem;
+                    outline: none;
+                    width: 90%;"></td>
+        </tr>
+        <thead>
+            <th height="55" colspan="15" style="background-color: rgb(204, 220, 252);">OUTCOME MEASURES SCORES
+            </th>
+        </thead>
+        <tr>
+            <td colspan="5" height="55">Treatment Location : <input name='treatment_location' value='treatment_location' type="text" style="border: none;
+                padding-left: 1rem;
+                outline: none;
+                width: 40%;"></td>
+        </tr>
+        <tr>
+            <td colspan="5" height="55">Left : <input name='mid_term_left1' name='mid_term_left1' type="text" style="border: none;
+                padding-left: 1rem;
+                outline: none;
+                width: 70%;"></td>
+        </tr>
+        <tr>
+            <td colspan="5" height="55">Right:<input name='mid_term_right1' type="text" value='' style="border: none;
+                    padding-left: 1rem;
+                    outline: none;
+                    width: 70%;"></td>
+        </tr>
+      <tr>
+            <td colspan="5" height="55">SCALE: <input name='name_of_protocol' type="text" style="border: none;
+                padding-left: 1rem;
+                outline: none;
+                width: 40%;"></td>
+            <td colspan="5" height="55">MID TERM <input name='mid_term_left2' type="text" style="border: none;
+                padding-left: 1rem;
+                outline: none;
+                width: 70%;"></td>
+            <td colspan="5" height="55">BASE LINE<input name='mid_term_right2' type="text" style="border: none;
+                    padding-left: 1rem;
+                    outline: none;
+                    width: 70%;"></td>
+              <td colspan="5" height="55">END TERM <input name='mid_term_right2' type="text" style="border: none;
+                    padding-left: 1rem;
+                    outline: none;
+                    width: 70%;"></td>
+        </tr>
+        <tr>
+
+        <thead>
+            <th height="55" colspan="15" style="background-color: rgb(204, 220, 252);">QUALITY OF LIFE </th>
+        </thead>
+        <tr>
+            <td colspan="8" height="55">Assessment of Quality of Life (AQoL)</td>
+
+            <td colspan="7" height="55"><input name='AQOL' type="text" style="border: none;
+                    padding-left: 1rem;
+                    outline: none;
+                    width: 90%;"></td>
+        </tr>
+        <thead>
+            <th height="55" colspan="15" style="background-color: rgb(204, 220, 252);">SAFETY </th>
+       
+        </thead>
+      
+    
+   <tr>
+            <td colspan="15" height="55"><input name='safety' type="text" placeholder='Relative Contraindications' style="border: none;
+                    padding-left: 1rem;
+                    outline: none;
+                    width: 90%;"></td>
+            
+            </td>
+        </tr> 
+ <tr>
+
+  
+        </tr>
+        <tr>
+      <td colspan="15" height="55">Date :<input name='final_date' type="date" style="border: none;
+            padding-left: 1rem;
+            outline: none;
+            width: 80%;
+            " required></td>
+        </tr>
+    </table>
+
+    <div class="container" style="margin: 0 auto; margin-bottom: 2rem; width: 100%; text-align: center">
+       <button class="btn btn-primary" type="submit" style=" margin-bottom: 2rem;">Save and Next</button> 
+
+    </div>
+</div>
+</form>
+
+
+ {% endblock %}
+
+
+{% comment %} <form action='' method='POST' enctype='multipart/form-data'>{% csrf_token %}
+{{form.as_p}}
+<input type='submit'>
+</form>  {% endcomment %}
+
+
+
+
+
+{% comment %} 
+
+<style>
+    body {
+      
+        margin-top: 10%;
+    }
+
+    .nav-tabs {
+        border-bottom: 1px solid #dee2e6;
+        position: relative;
+        left: 3em;
+    }
+
+    /* main {
+        position: relative;
+        top: -22em;
+        left: 15em;
+    } */
+</style>
+<br>
+<nav style="margin-top: 4rem;" class="navbar navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul style="display: flex;
+      width: 100%;
+      justify-content: space-between;" class="navbar-nav mr-auto">
+      
+  
+  
+        <li class="nav-item">
+          <a class="nav-link" id="clinical-tab" data-toggle="tab"
+            href="{% url 'clinical_variable:add_patient_detailed_demographic_information'%}" role="tab"
+            aria-controls="clinical" aria-selected="true">Clinical Variables</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="prescription-tab" data-toggle="tab"
+            href="{% url 'prescription:add_patient_prescription' %}" role="tab" aria-controls="profile"
+            aria-selected="false">Prescription</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="initiation-tab" data-toggle="tab" href="{% url 'initiation:add_initiation_summary' %}"
+            role="tab" aria-controls="initiation" aria-selected="false">Initiation Summary</a>
+        </li>
+  
+        <li class="nav-item">
+          <a class="nav-link" id="endterm-tab" data-toggle="tab" href="{% url 'midterm:midterm_report' %}" role="tab"
+            aria-controls="endterm" aria-selected="false">Mid-Term Summary</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="endterm-tab" data-toggle="tab" href="{% url 'endterm:add_endterm_report' %}" role="tab"
+            aria-controls="endterm" aria-selected="false">End-Term Summary</a>
+        </li>
+  
+  
+      </ul>
+    </div>
+  </nav>
+
+<center>
+<h2>Detailed Demographics info of patient </h2>
+<br>
+
+<br>
+<form action=''  method='POST'><input type="hidden" name="csrfmiddlewaretoken" value="Q7eGFRKCBlMy7F3aS6JMHPlbI1j4uJzMTWjcK90dVY6mZZfDIUfd7UAOu0NRKKLX">
+<p><label for="id_disease_data1">Disease data1:</label> <input type="text" name="disease_data1" maxlength="30" required id="id_disease_data1"></p>
+<p><label for="id_disease_data2">Disease data2:</label> <input type="text" name="disease_data2" maxlength="30" id="id_disease_data2"></p>
+<p><label for="id_disease_data3">Disease data3:</label> <input type="text" name="disease_data3" maxlength="30" id="id_disease_data3"></p>
+<p><label for="id_duration1">Duration1:</label> <input type="text" name="duration1" maxlength="20" required id="id_duration1"></p>
+<p><label for="id_duration2">Duration2:</label> <input type="text" name="duration2" maxlength="20" id="id_duration2"></p>
+<p><label for="id_duration3">Duration3:</label> <input type="text" name="duration3" maxlength="20" id="id_duration3"></p>
+<p><label for="id_if_depresses_score">If depresses score:</label> <input type="text" name="if_depresses_score" maxlength="20" id="id_if_depresses_score"></p>
+<p><label for="id_medic_name1">Medic name1:</label> <input type="text" name="medic_name1" maxlength="50" id="id_medic_name1"></p>
+<p><label for="id_medic_name2">Medic name2:</label> <input type="text" name="medic_name2" maxlength="50" id="id_medic_name2"></p>
+<p><label for="id_dose1">Dose1:</label> <input type="text" name="dose1" maxlength="30" id="id_dose1"></p>
+<p><label for="id_dose2">Dose2:</label> <input type="text" name="dose2" maxlength="30" id="id_dose2"></p>
+<p><label for="id_response1">Response1:</label> <input type="text" name="response1" maxlength="30" id="id_response1"></p>
+<p><label for="id_response2">Response2:</label> <input type="text" name="response2" maxlength="30" id="id_response2"></p>
+<p><label for="id_commencement_date">Commencement date:</label> <input type="date" name="commencement_date" value="2020-11-11" required id="id_commencement_date"></p>
+<p><label for="id_mid_term_date">Mid term date:</label> <input type="date" name="mid_term_date" value="2020-11-11" required id="id_mid_term_date"></p>
+<p><label for="id_treatment_location">Treatment location:</label> <input type="text" name="treatment_location" maxlength="50" id="id_treatment_location"></p>
+<p><label for="id_name_of_protocol">Name of protocol:</label> <input type="text" name="name_of_protocol" maxlength="50" id="id_name_of_protocol"></p>
+<p><label for="id_total_duration">Total duration:</label> <input type="number" name="total_duration" value="1" id="id_total_duration"></p>
+<p><label for="id_total_pulse">Total pulse:</label> <input type="number" name="total_pulse" value="1" id="id_total_pulse"></p>
+<p><label for="id_mid_term_left1">Mid term left1:</label> <input type="text" name="mid_term_left1" maxlength="50" id="id_mid_term_left1"></p>
+<p><label for="id_mid_term_left2">Mid term left2:</label> <input type="text" name="mid_term_left2" maxlength="50" id="id_mid_term_left2"></p>
+<p><label for="id_mid_term_left3">Mid term left3:</label> <input type="text" name="mid_term_left3" maxlength="50" id="id_mid_term_left3"></p>
+<p><label for="id_mid_term_right1">Mid term right1:</label> <input type="text" name="mid_term_right1" maxlength="50" id="id_mid_term_right1"></p>
+<p><label for="id_mid_term_right2">Mid term right2:</label> <input type="text" name="mid_term_right2" maxlength="50" id="id_mid_term_right2"></p>
+<p><label for="id_mid_term_right3">Mid term right3:</label> <input type="text" name="mid_term_right3" maxlength="50" id="id_mid_term_right3"></p>
+<p><label for="id_total_pulse_left">Total pulse left:</label> <input type="text" name="total_pulse_left" maxlength="50" id="id_total_pulse_left"></p>
+<p><label for="id_total_pulse_right">Total pulse right:</label> <input type="text" name="total_pulse_right" maxlength="50" id="id_total_pulse_right"></p>
+<p><label for="id_no_of_session_prescribed">No of session prescribed:</label> <input type="number" name="no_of_session_prescribed" value="1" id="id_no_of_session_prescribed"></p>
+<p><label for="id_DAAS_baseline">DAAS baseline:</label> <input type="text" name="DAAS_baseline" maxlength="100" id="id_DAAS_baseline"></p>
+<p><label for="id_DAAS_midterm">DAAS midterm:</label> <input type="text" name="DAAS_midterm" maxlength="100" id="id_DAAS_midterm"></p>
+<p><label for="id_DAAS_endterm">DAAS endterm:</label> <input type="text" name="DAAS_endterm" maxlength="100" id="id_DAAS_endterm"></p>
+<p><label for="id_depression_baseline">Depression baseline:</label> <input type="text" name="depression_baseline" maxlength="100" id="id_depression_baseline"></p>
+<p><label for="id_depression_midterm">Depression midterm:</label> <input type="text" name="depression_midterm" maxlength="100" id="id_depression_midterm"></p>
+<p><label for="id_depression_endterm">Depression endterm:</label> <input type="text" name="depression_endterm" maxlength="100" id="id_depression_endterm"></p>
+<p><label for="id_anxiety_baseline">Anxiety baseline:</label> <input type="text" name="anxiety_baseline" maxlength="100" id="id_anxiety_baseline"></p>
+<p><label for="id_anxiety_midterm">Anxiety midterm:</label> <input type="text" name="anxiety_midterm" maxlength="100" id="id_anxiety_midterm"></p>
+<p><label for="id_anxiety_endterm">Anxiety endterm:</label> <input type="text" name="anxiety_endterm" maxlength="100" id="id_anxiety_endterm"></p>
+<p><label for="id_MARDS_baseline">MARDS baseline:</label> <input type="text" name="MARDS_baseline" maxlength="100" id="id_MARDS_baseline"></p>
+<p><label for="id_MARDS_midterm">MARDS midterm:</label> <input type="text" name="MARDS_midterm" maxlength="100" id="id_MARDS_midterm"></p>
+<p><label for="id_MARDS_endterm">MARDS endterm:</label> <input type="text" name="MARDS_endterm" maxlength="100" id="id_MARDS_endterm"></p>
+<p><label for="id_CGI_S_baseline">CGI S baseline:</label> <input type="text" name="CGI_S_baseline" maxlength="100" id="id_CGI_S_baseline"></p>
+<p><label for="id_CGI_S_midterm">CGI S midterm:</label> <input type="text" name="CGI_S_midterm" maxlength="100" id="id_CGI_S_midterm"></p>
+<p><label for="id_CGI_S_endterm">CGI S endterm:</label> <input type="text" name="CGI_S_endterm" maxlength="100" id="id_CGI_S_endterm"></p>
+<p><label for="id_GAF_baseline">GAF baseline:</label> <input type="text" name="GAF_baseline" maxlength="100" id="id_GAF_baseline"></p>
+<p><label for="id_GAF_midterm">GAF midterm:</label> <input type="text" name="GAF_midterm" maxlength="100" id="id_GAF_midterm"></p>
+<p><label for="id_GAF_endterm">GAF endterm:</label> <input type="text" name="GAF_endterm" maxlength="100" id="id_GAF_endterm"></p>
+<p><label for="id_quality_of_life">Quality of life:</label> <input type="text" name="quality_of_life" maxlength="100" id="id_quality_of_life"></p>
+<p><label for="id_relative_contradiction">Relative contradiction:</label> <input type="text" name="relative_contradiction" maxlength="100" id="id_relative_contradiction"></p>
+<p><label for="id_report_sideeffect">Report sideeffect:</label> <input type="text" name="report_sideeffect" maxlength="100" id="id_report_sideeffect"></p>
+<p><label for="id_patient_narrative_ofchange">Patient narrative ofchange:</label> <textarea name="patient_narrative_ofchange" cols="40" rows="10" maxlength="5000" id="id_patient_narrative_ofchange">
+</textarea></p>
+<p><label for="id_recommendations_of_future">Recommendations of future:</label> <textarea name="recommendations_of_future" cols="40" rows="10" maxlength="5000" id="id_recommendations_of_future">
+</textarea></p>
+<p><label for="id_final_date">Final date:</label> <input type="text" name="final_date" value="2020-11-11" required id="id_final_date"></p>
+<input type='submit'>
+
+</form> 
+</center> {% endcomment %}
+
+{% comment %} <h2>Detailed Demographics info of patient </h2>
+<br>
+
+<br>
+<form action=''  method='POST'>{% csrf_token %}
+{{endterm_form.as_p}}
+<input type='submit'>
+
+</form>  {% endcomment %}

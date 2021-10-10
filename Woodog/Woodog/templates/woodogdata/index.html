@@ -1,0 +1,121 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% include 'partials/header.html' %}
+
+<style>
+    
+    .main-pg-dog{
+        border-radius: 24px;
+        margin-top:20px;
+    }
+    .main-heading{
+        color:#FAFAFA;
+        margin-top:100px;
+        font-weight: 500;
+        font-size: 48px;
+        font-family: 'Poppins', sans-serif;
+        line-height: 72px;
+        
+    }
+    .application{
+        margin-left:192px;
+        width:500px;
+    }
+    .main-text{
+        font-size:24px;
+        line-height:38.06px;
+        color:hsla(0, 0%, 98%, 0.8);
+        font-family: 'Nunito', sans-serif;
+    }
+    .cards-section{
+        margin-left:146px;
+        margin-bottom: 163px;
+    }
+    .card-pics{
+        border-radius: 12px;
+    }
+    .card-text{
+        width:384px;
+        font-size:24px;
+        margin-top:40px;
+        line-height:38.06px;
+        color:hsla(0, 0%, 98%, 0.8);
+        font-family: 'Nunito', sans-serif;        
+    }
+    .cards-btn{
+        height:57px;
+        border-radius:8px;
+        padding:16px 45px 16px 45px;
+        width:530px;
+        background-color:#5A40AB;
+        margin-top:40px;
+        color:white;
+        font-family: 'Nunito', sans-serif;
+        font-size:18px;
+    }
+    .index-apply-btn{
+        border-radius: 0px 12px 12px 0px;
+        background-color:#5A40AB;
+        color:white;
+        width:139px;
+        font-size: 18px;
+        font-family: 'Nunito', sans-serif;
+    }
+    .email-input{
+        width:326px;
+        height:60px;
+        font-size: 18px;
+        background-color: #1F163B;
+        border-radius:12px 0px 0px 12px;
+        border:1px solid #5A40AB;
+    }
+
+
+</style>
+<main role='main' class="container">
+    <p class="main-heading" style="width:500px;margin-left:192px;">Your Kindness can help them</p>
+    <img class="main-pg-dog" src="{% static 'img/dog-main.jpg' %}">
+
+    <div class="application">
+        <p class="main-heading">Food! Shelter! Love!</p> 
+        <p class="main-text" style="width:384px;">With Woodog provide food, shelter or any kind of help which is possible from your side to these little beings.</p>
+        <form class="form-inline">
+            <div class="row" style="width:446px;">
+                <input type="email"  class="email-input form-control col" id="inputEmail4" placeholder="Email">
+                <button class="btn index-apply-btn" type="submit">Sign up</button>
+            </div>
+        </form>
+    </div>  
+</main>
+
+<div class="cards-section">
+    <p class="main-heading">How can you Help?</p>
+    <div class="row" style="margin-top:40px;">
+        <div class="col">
+            <img class="card-pics" src="{% static 'img/dog-photo1.jpg' %}">
+            <p class="card-text">Provide the location and condition of nearby stray and let us find their local helper. </p>
+            <button type="button" onclick="register_as('seeker')" class="cards-btn" class="btn btn-lg">Sign Up as Seeker</button>
+        </div>
+        <div class="col">
+            <img class="card-pics" src="{% static 'img/dog-photo2.jpg' %}">
+            <p class="card-text" style="width: 363px;">Arrange temporary food and shelter for your local stray animals.</p>
+            <button type="button" onclick = "register_as('helper')" class="cards-btn" class="btn btn-lg">Sign Up as Helper</button>
+        </div>
+    </div>    
+</div>
+
+<script >
+    function register_as(type) {
+        location.href= `authentication/register` ;
+    }
+
+</script>
+
+{% include 'partials/footer.html' %}
+
+{% endblock content %}
+
+
